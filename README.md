@@ -5,7 +5,9 @@ i. Rename with GPyyyyMMdd_hhmmss.mp4 filename
 
 ii. Encode with x265/HEVC via Handbrake CLI to save space
 
-Download third party dependencies:
+Make sure the build is targeting x64 as MediaInfo.dll is architecture specific.
+
+Instead of checked-in versions, download third party dependencies from source:
 
 1) Handbrake CLI
 https://handbrake.fr/downloads2.php
