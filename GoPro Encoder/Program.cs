@@ -26,7 +26,7 @@ namespace ConsoleApp3
             foreach (FileInfo fi in dir.GetFiles())
             {
                 //found gopro filename
-                if (fi.Name.StartsWith("G") && fi.Extension.Equals(".MP4"))
+                if (fi.Name.StartsWith("GX") && (fi.Extension.Equals(".MP4") || fi.Extension.Equals(".mp4")))
                 {
                     Console.WriteLine(fi.Name);
                     mi.Open(fi.FullName);
@@ -47,19 +47,32 @@ namespace ConsoleApp3
 
                     var datestr = mi.Get(StreamKind.Video, 0, "Encoded_Date");
 
-                    var outputFileName = dir + dtCreated.ToString("GP_yyyyMMdd_HHmmss") + ".mp4";
+                    var fileName = $"{dir}{dtCreated.ToString("GP_yyyy_MM_dd_HHmmss")}";
+                    var extension = "mp4";
+                    int? uniqueIndex = null;
+
+                    if (File.Exists($"{fileName}.{extension}")) {
+                        uniqueIndex = 0;
+                        while (File.Exists($"{fileName}_{uniqueIndex}.{extension}"))
+                        {
+                            uniqueIndex++;
+                        }
+                    }
+
+                    var outputFileName = $"{fileName}{(uniqueIndex != null ? $"_{uniqueIndex.ToString()}" : String.Empty)}.{extension}";
+
                     Console.WriteLine("Output Filename: " + outputFileName);
-                    //todo - check if file exists
+
                     //todo log to file
 
                     var encodingcodec = " -e x265"; //x265 encoding
                     var quality_preset = " -q 22";  //scale of 22 out of 30
                     //var frame_rate = "";
                     var frame_rate = " --cfr";  //constant frame rate
-                    var encoder_preset = " --encoder-preset slow";
+                    var encoder_preset = " --encoder-preset medium";
                     var psi = new ProcessStartInfo("HandBrakeCLI.exe")
                     {
-                        Arguments = "-i " + fi.FullName + " -o " + outputFileName + encodingcodec + quality_preset,// + frame_rate + encoder_preset, 
+                        Arguments = "-i " + fi.FullName + " -o " + outputFileName + encodingcodec + encoder_preset// + frame_rate + encoder_preset, 
                     };
 
                     var process = Process.Start(psi);
