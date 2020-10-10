@@ -72,9 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gopro_72px.ico" />
-    <Content Include="HandBrakeCLI.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="HandBrakeCLI.exe" />
     <Content Include="MediaInfo.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

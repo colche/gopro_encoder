@@ -66,7 +66,7 @@ namespace ConsoleApp3
                     //todo log to file
 
                     var encodingcodec = " -e x265"; //x265 encoding
-                    var quality_preset = " -q 22";  //scale of 22 out of 30
+                    var quality_preset = " -q 25";  //scale of 25 out of 30
                     //var frame_rate = "";
                     var frame_rate = " --cfr";  //constant frame rate
                     var encoder_preset = " --encoder-preset medium";
