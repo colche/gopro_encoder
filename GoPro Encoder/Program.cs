@@ -38,14 +38,17 @@ namespace ConsoleApp3
 
                     var width = mi.Get(StreamKind.Video, 0, "Width");
                     var height = mi.Get(StreamKind.Video, 0, "Height");
-                    //parse the string "UTC 2018-11-21 15:55:09"
-                    DateTime dtCreated = DateTime.Parse(mi.Get(StreamKind.Video, 0, "Encoded_Date").Substring(4));
+                    //parse the string "2018-11-21 15:55:09 UTC"
+                    DateTime dtCreated = DateTime.Parse(mi.Get(StreamKind.Video, 0, "Encoded_Date").Replace(" UTC", ""));
+
+                    //special manually adjust for japan time for now
+                    //dtCreated = dtCreated.AddHours(9);
 
                     Console.WriteLine("Height: " + height);
                     Console.WriteLine("Width: " + width);
                     Console.WriteLine("Date Created: " + dtCreated);
 
-                    var datestr = mi.Get(StreamKind.Video, 0, "Encoded_Date");
+                    //var datestr = mi.Get(StreamKind.Video, 0, "Encoded_Date");
 
                     var fileName = $"{dir}{dtCreated.ToString("GP_yyyy_MM_dd_HHmmss")}";
                     var extension = "mp4";
