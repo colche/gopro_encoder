@@ -41,8 +41,9 @@ namespace ConsoleApp3
                     //parse the string "2018-11-21 15:55:09 UTC"
                     DateTime dtCreated = DateTime.Parse(mi.Get(StreamKind.Video, 0, "Encoded_Date").Replace(" UTC", ""));
 
-                    //special manually adjust for japan time for now
-                    //dtCreated = dtCreated.AddHours(9);
+                    //special manually adjust for local time
+                    TimeSpan currentOffset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
+                    dtCreated = dtCreated.AddMinutes(currentOffset.TotalMinutes);
 
                     Console.WriteLine("Height: " + height);
                     Console.WriteLine("Width: " + width);
