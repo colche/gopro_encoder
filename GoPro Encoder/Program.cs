@@ -22,6 +22,16 @@ namespace ConsoleApp3
             Console.WriteLine(mi.Option("Info_Version"));
             Console.WriteLine();
 
+            //special manually adjust for local time
+            TimeSpan currentOffset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
+            Console.WriteLine($"Current UTC Offset is: {currentOffset.Hours}");
+            Console.WriteLine("Override this with a new value?");
+            int? offset = Console.ReadLine().ToNullableInt();
+            if (offset != null)
+            {
+                currentOffset = new TimeSpan(offset.Value, 0, 0);
+            }
+
             var dir = new DirectoryInfo(directory);
             foreach (FileInfo fi in dir.GetFiles())
             {
@@ -42,7 +52,6 @@ namespace ConsoleApp3
                     DateTime dtCreated = DateTime.Parse(mi.Get(StreamKind.Video, 0, "Encoded_Date").Replace(" UTC", ""));
 
                     //special manually adjust for local time
-                    TimeSpan currentOffset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
                     dtCreated = dtCreated.AddMinutes(currentOffset.TotalMinutes);
 
                     Console.WriteLine("Height: " + height);
@@ -89,6 +98,14 @@ namespace ConsoleApp3
 
             Console.WriteLine("Finished! Press enter to exit.");
             Console.ReadLine();
+        }
+    }
+
+    public static class ExtensionMethod { 
+        public static int? ToNullableInt(this string s) {
+            int i;
+            if (int.TryParse(s, out i)) return i;
+            return null;
         }
     }
 }
