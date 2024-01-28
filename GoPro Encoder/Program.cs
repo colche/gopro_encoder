@@ -25,7 +25,7 @@ namespace ConsoleApp3
             //special manually adjust for local time
             TimeSpan currentOffset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
             Console.WriteLine($"Current UTC Offset is: {currentOffset.Hours}");
-            Console.WriteLine("Override this with a new value?");
+            Console.WriteLine("Enter number to override this with a new value? (Otherwise press 'N' or Enter)");
             int? offset = Console.ReadLine().ToNullableInt();
             if (offset != null)
             {
